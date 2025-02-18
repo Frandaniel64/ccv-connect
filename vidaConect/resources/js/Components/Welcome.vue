@@ -1,104 +1,158 @@
 <script setup>
+import { ref } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+
+const activeMenu = ref('dashboard');
+
+const quickStats = ref([
+    {
+        title: 'Total Miembros',
+        value: '2,847',
+        icon: 'fas fa-users',
+        bgColor: 'bg-green-400/10 text-green-400',
+        trend: 'up',
+        percentage: 12
+    },
+    {
+        title: 'Nuevos Visitantes',
+        value: '145',
+        icon: 'fas fa-user-plus',
+        bgColor: 'bg-purple-400/10 text-purple-400',
+        trend: 'up',
+        percentage: 8
+    },
+    {
+        title: 'Eventos Activos',
+        value: '24',
+        icon: 'fas fa-calendar-check',
+        bgColor: 'bg-blue-400/10 text-blue-400',
+        trend: 'down',
+        percentage: 3
+    }
+]);
+
+const recentActivity = ref([
+    {
+        id: 1,
+        title: 'Nuevo evento creado: "Retiro Juvenil 2024"',
+        time: 'Hace 2 horas',
+        icon: 'fas fa-calendar-plus',
+        bgColor: 'bg-green-400/10 text-green-400'
+    },
+    {
+        id: 2,
+        title: 'Actualización de horario de servicios',
+        time: 'Hace 4 horas',
+        icon: 'fas fa-clock',
+        bgColor: 'bg-blue-400/10 text-blue-400'
+    },
+    {
+        id: 3,
+        title: '15 nuevos registros de membresía',
+        time: 'Hace 6 horas',
+        icon: 'fas fa-user-plus',
+        bgColor: 'bg-purple-400/10 text-purple-400'
+    }
+]);
 </script>
 
 <template>
-    <div>
-        <div class="p-6 lg:p-8 bg-white border-b border-gray-200">
-            <ApplicationLogo class="block h-12 w-auto" />
-
-            <h1 class="mt-8 text-2xl font-medium text-gray-900">
-                Welcome to your Jetstream application!
-            </h1>
-
-            <p class="mt-6 text-gray-500 leading-relaxed">
-                Laravel Jetstream provides a beautiful, robust starting point for your next Laravel application. Laravel is designed
-                to help you build your application using a development environment that is simple, powerful, and enjoyable. We believe
-                you should love expressing your creativity through programming, so we have spent time carefully crafting the Laravel
-                ecosystem to be a breath of fresh air. We hope you love it.
-            </p>
-        </div>
-
-        <div class="bg-gray-200 bg-opacity-25 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 p-6 lg:p-8">
-            <div>
-                <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="size-6 stroke-gray-400">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                    </svg>
-                    <h2 class="ms-3 text-xl font-semibold text-gray-900">
-                        <a href="https://laravel.com/docs">Documentation</a>
-                    </h2>
+    <div class="min-h-screen bg-gray-50">
+        <!-- Header -->
+        <!--    <header class="bg-white border-b border-gray-200">
+            <div class="flex items-center justify-between px-8 py-4">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" placeholder="Buscar..."
+                            class="pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-green-400 w-64">
+                    </div>
+                    <button class="p-2 rounded-lg hover:bg-gray-100">
+                        <i class="fas fa-bell text-gray-600"></i>
+                    </button>
                 </div>
 
-                <p class="mt-4 text-gray-500 text-sm leading-relaxed">
-                    Laravel has wonderful documentation covering every aspect of the framework. Whether you're new to the framework or have previous experience, we recommend reading all of the documentation from beginning to end.
-                </p>
+             
+            </div>
+        </header> -->
 
-                <p class="mt-4 text-sm">
-                    <a href="https://laravel.com/docs" class="inline-flex items-center font-semibold text-indigo-700">
-                        Explore the documentation
-
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="ms-1 size-5 fill-indigo-500">
-                            <path fill-rule="evenodd" d="M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z" clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                </p>
+        <!-- Dashboard Content -->
+        <main class="p-4 md:p-6">
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div v-for="stat in quickStats" :key="stat.title"
+                    class="bg-white p-4 rounded-lg border border-gray-200 hover:border-green-400/50 transition-colors shadow-sm">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">{{ stat.title }}</p>
+                            <p class="text-xl font-semibold mt-0.5">{{ stat.value }}</p>
+                        </div>
+                        <div :class="['w-10 h-10 rounded-lg flex items-center justify-center', stat.bgColor]">
+                            <i :class="['text-lg', stat.icon]"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2 flex items-center gap-1.5 text-sm">
+                        <span :class="stat.trend === 'up' ? 'text-green-500' : 'text-red-500'">
+                            <i :class="stat.trend === 'up' ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i>
+                            {{ stat.percentage }}%
+                        </span>
+                        <span class="text-gray-500">vs mes anterior</span>
+                    </div>
+                </div>
             </div>
 
-            <div>
-                <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="size-6 stroke-gray-400">
-                        <path stroke-linecap="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
-                    </svg>
-                    <h2 class="ms-3 text-xl font-semibold text-gray-900">
-                        <a href="https://laracasts.com">Laracasts</a>
-                    </h2>
+            <!-- Recent Activity & Calendar -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <!-- Recent Activity -->
+                <div class="lg:col-span-2 bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-base font-semibold text-gray-900">Actividad Reciente</h2>
+                        <button class="text-sm text-green-500 hover:text-green-600">Ver todo</button>
+                    </div>
+                    <div class="space-y-3">
+                        <div v-for="activity in recentActivity" :key="activity.id"
+                            class="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                            <div :class="['w-8 h-8 rounded-lg flex items-center justify-center', activity.bgColor]">
+                                <i :class="['text-base', activity.icon]"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-sm">{{ activity.title }}</p>
+                                <p class="text-xs text-gray-500 mt-0.5">{{ activity.time }}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <p class="mt-4 text-gray-500 text-sm leading-relaxed">
-                    Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
-                </p>
-
-                <p class="mt-4 text-sm">
-                    <a href="https://laracasts.com" class="inline-flex items-center font-semibold text-indigo-700">
-                        Start watching Laracasts
-
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="ms-1 size-5 fill-indigo-500">
-                            <path fill-rule="evenodd" d="M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z" clip-rule="evenodd" />
-                        </svg>
-                    </a>
-                </p>
-            </div>
-
-            <div>
-                <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="size-6 stroke-gray-400">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                    </svg>
-                    <h2 class="ms-3 text-xl font-semibold text-gray-900">
-                        <a href="https://tailwindcss.com/">Tailwind</a>
-                    </h2>
+                <!-- Calendar -->
+                <div class="bg-white rounded-lg border border-gray-200 p-4 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-base font-semibold text-gray-900">Calendario</h2>
+                        <div class="flex gap-1">
+                            <button class="p-1 rounded hover:bg-gray-100">
+                                <i class="fas fa-chevron-left text-sm"></i>
+                            </button>
+                            <button class="p-1 rounded hover:bg-gray-100">
+                                <i class="fas fa-chevron-right text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-center mb-3">
+                        <h3 class="text-base font-medium text-gray-700">Mayo 2024</h3>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1">
+                        <div v-for="day in ['D', 'L', 'M', 'M', 'J', 'V', 'S']" :key="day"
+                            class="text-center text-xs text-gray-500 py-1">
+                            {{ day }}
+                        </div>
+                        <div v-for="date in 31" :key="date" :class="[
+                            'text-center py-1.5 text-sm rounded cursor-pointer',
+                            date === 15 ? 'bg-green-500 text-white' : 'hover:bg-gray-50'
+                        ]">
+                            {{ date }}
+                        </div>
+                    </div>
                 </div>
-
-                <p class="mt-4 text-gray-500 text-sm leading-relaxed">
-                    Laravel Jetstream is built with Tailwind, an amazing utility first CSS framework that doesn't get in your way. You'll be amazed how easily you can build and maintain fresh, modern designs with this wonderful framework at your fingertips.
-                </p>
             </div>
-
-            <div>
-                <div class="flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="size-6 stroke-gray-400">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                    </svg>
-                    <h2 class="ms-3 text-xl font-semibold text-gray-900">
-                        Authentication
-                    </h2>
-                </div>
-
-                <p class="mt-4 text-gray-500 text-sm leading-relaxed">
-                    Authentication and registration views are included with Laravel Jetstream, as well as support for user email verification and resetting forgotten passwords. So, you're free to get started with what matters most: building your application.
-                </p>
-            </div>
-        </div>
+        </main>
     </div>
 </template>
