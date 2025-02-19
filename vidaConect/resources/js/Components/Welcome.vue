@@ -1,6 +1,9 @@
+<!--Primera vista del dashboard-->
+
+
 <script setup>
 import { ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+
 
 const activeMenu = ref('dashboard');
 
