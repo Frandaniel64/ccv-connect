@@ -1,23 +1,29 @@
-/* ===== NAVBAR ===== */
+/* ===== NAVBAR FIJO SUPERIOR (ESTILO MODERNO) ===== */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: var(--shadow-sm);
+    width: 100%;
+    max-width: 100%;
+    transform: none;
+    background: #ffffff;
+    border-radius: 0;
+    /* Sin bordes redondeados al ser full width */
+    box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
     z-index: 1000;
-    transition: all var(--transition-base);
+    transition: all 0.3s ease;
+    padding: 0.5rem 0;
 }
 
 .navbar-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--spacing-md) 0;
+    /* El padding horizontal lo maneja el container */
 }
 
+/* Logo y Título */
 .navbar-brand a {
     text-decoration: none;
     display: flex;
@@ -26,49 +32,79 @@
 }
 
 .navbar-logo {
-    height: 50px;
+    height: 45px;
     width: auto;
 }
 
 .navbar-title {
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-size: 1.5rem;
+    /* Texto oscuro y limpio como en la imagen de referencia */
+    color: var(--dark);
+    font-size: 1.25rem;
     font-weight: 700;
     margin: 0;
+    letter-spacing: -0.02em;
 }
 
+/* Menú de Navegación */
 .navbar-menu {
     display: flex;
-    gap: var(--spacing-lg);
+    align-items: center;
+    gap: 2rem;
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .navbar-menu a {
     font-weight: 500;
-    color: var(--text-primary);
+    color: var(--text-secondary);
+    /* Gris suave */
     transition: color var(--transition-fast);
     text-decoration: none;
+    font-size: 0.95rem;
 }
 
 .navbar-menu a:hover,
 .navbar-menu a.active {
     color: var(--primary);
+    /* Azul corporativo al pasar el mouse */
+}
+
+/* ESTILO DE BOTÓN PARA EL ÚLTIMO ENLACE (CONTACTO) */
+.navbar-menu li:last-child a {
+    background-color: var(--secondary);
+    /* Verde corporativo */
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-menu li:last-child a:hover {
+    background-color: var(--secondary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.15);
+    color: white;
 }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+    .navbar {
+        padding: 0.5rem 0;
+    }
+
     .navbar-menu {
         display: none;
+        /* Aquí normalmente iría un menú hamburguesa */
     }
 
     .navbar-logo {
-        height: 40px;
+        height: 35px;
     }
 
     .navbar-title {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
     }
 }
