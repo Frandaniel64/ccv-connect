@@ -41,4 +41,10 @@ export class LoginComponent {
             }
         });
     }
+
+    quickLogin() {
+        this.email = 'admin@test.com';
+        this.password = 'password123';
+        this.onSubmit();
+    }
 }
