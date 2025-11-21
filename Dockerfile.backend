@@ -1,0 +1,39 @@
+# Dockerfile para Laravel Backend
+FROM php:8.1-fpm
+
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    libzip-dev \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+
+# Instalar Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Establecer directorio de trabajo
+WORKDIR /var/www/backend
+
+# Copiar archivos de composer
+COPY backend/composer.json backend/composer.lock ./
+
+# Instalar dependencias de PHP
+RUN composer install --no-dev --optimize-autoloader --no-scripts
+
+# Copiar el resto del código
+COPY backend/ .
+
+# Establecer permisos
+RUN chown -R www-data:www-data /var/www/backend \
+    && chmod -R 755 /var/www/backend/storage \
+    && chmod -R 755 /var/www/backend/bootstrap/cache
+
+# Exponer puerto
+EXPOSE 9000
+
+CMD ["php-fpm"]

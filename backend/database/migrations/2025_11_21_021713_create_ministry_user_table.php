@@ -15,7 +15,13 @@ class CreateMinistryUserTable extends Migration
     {
         Schema::create('ministry_user', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('ministry_id')->constrained()->onDelete('cascade');
+            $table->boolean('is_leader')->default(false);
             $table->timestamps();
+            
+            // Evitar duplicados
+            $table->unique(['user_id', 'ministry_id']);
         });
     }
 

@@ -1,0 +1,28 @@
+# Backend
+backend/vendor/
+backend/node_modules/
+backend/.env
+backend/storage/logs/*
+backend/storage/framework/cache/*
+backend/storage/framework/sessions/*
+backend/storage/framework/views/*
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/.vscode/
+
+# Git
+.git/
+.gitignore
+
+# Docs
+docs/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~

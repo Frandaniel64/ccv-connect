@@ -102,6 +102,22 @@ erDiagram
         text value
         timestamps created_at
     }
+
+    RESOURCES {
+        bigint id PK
+        string title
+        string slug
+        text description
+        string file_url
+        string file_type
+        integer file_size
+        string category
+        bigint ministry_id FK
+        bigint uploaded_by FK
+        integer downloads
+        boolean is_published
+        timestamps created_at
+    }
 ```
 
 ## Descripción de Tablas y Relaciones

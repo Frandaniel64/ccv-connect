@@ -1,0 +1,32 @@
+# Dockerfile multi-stage para Angular Frontend
+
+# Etapa 1: Build
+FROM node:20-alpine AS build
+
+WORKDIR /app
+
+# Copiar archivos de dependencias
+COPY frontend/package*.json ./
+
+# Instalar dependencias
+RUN npm ci
+
+# Copiar el código fuente
+COPY frontend/ .
+
+# Construir la aplicación para producción
+RUN npm run build
+
+# Etapa 2: Servir con Nginx
+FROM nginx:alpine
+
+# Copiar la configuración de nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Copiar los archivos compilados desde la etapa de build
+COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
+
+# Exponer puerto
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
